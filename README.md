@@ -22,7 +22,7 @@ fi
 ```
 
 #### Genesis state of parachains
-Currently, there is an issue with getting the genesis state in step 3 of the [https://github.com/paritytech/cumulus#running-a-collator](instruction), discussed in riot. Here are the genesis states used for registration. 
+Currently, there is an issue with getting the genesis state in step 3 of the [instruction](https://github.com/paritytech/cumulus#running-a-collator), discussed in riot. Here are the genesis states used for registration. 
 
 TODO: update genesis states
 
