@@ -61,5 +61,14 @@ fi
 ./target/release/polkadot build-spec --chain=westend_local.json --raw --disable-default-bootnode > ddex_raw.json
 ```
 
+___
+## App
+
+This is currently a playground. 
+
+```
+cd app
+yarn
+```
 
 
