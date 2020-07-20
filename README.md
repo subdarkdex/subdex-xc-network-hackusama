@@ -13,44 +13,41 @@ Steps required are:-
 1. run paraA and paraB
 1. register parachains
 
-For development of parachains:-
-1. 
-
 
 ### validators
 `docker-compose up` will set up alice and bob
 
-### get parachain repo
+### build parachains
 ```
-git clone https://github.com/paritytech/cumulus/tree/https://github.com/paritytech/cumulus cumulus
-git checkout 516ad523c1d376262894b396a4e11544548c6708
-git reset --hard
-git checkout -b ddex
-```
-TODO our fork and branch https://github.com/subdarkdex/cumulus
-
-### parachain build
-In the root of /cumulus
-
-TODO figure out how to get para_id or does it matter?
-```
-cargo build --release --package cumulus-test-parachain-collator
+build_collators.sh
 ```
 
 ### run the parachains
+```
+start_collators.sh
+```
 
-TODO
-<!-- cargo run --release -p cumulus-test-parachain-collator -- \
---base-path paraA -- \
---chain=ddex_raw.json \
---bootnodes=/ip4/127.0.0.1/tcp/30333/p2p/12D3KooWBNfNrYAyjK9G6yXoLDwBHyNFhHxJ874Vf6h9kXdogkNR
---bootnodes=/ip4/127.0.0.1/tcp/30335/p2p/12D3KooWFZqnxrhBSgfd8mFjzetYektSqpwHgHnNq9b2VLTuUMwD -->
+### register parachains
 
-<!-- cargo run --release -p cumulus-test-parachain-collator -- \
---base-path paraB -- \
---chain=ddex_raw.json \
---bootnodes=/ip4/127.0.0.1/tcp/30333/p2p/12D3KooWBNfNrYAyjK9G6yXoLDwBHyNFhHxJ874Vf6h9kXdogkNR
---bootnodes=/ip4/127.0.0.1/tcp/30335/p2p/12D3KooWFZqnxrhBSgfd8mFjzetYektSqpwHgHnNq9b2VLTuUMwD -->
+TODO: script
+
+
+To register a parachain we will need that parachain_id and the genesis state. Currently, there is an issue with getting the genesis state in step 3 of the [instruction](https://github.com/paritytech/cumulus#running-a-collator), discussed in riot. So we will have to do it manually with UI for now. You can see both after you start the `start_collators.sh`, it will be something like this... 
+
+```
+2020-07-20 12:33:21 Parachain id: Id(100)
+2020-07-20 12:33:21 Parachain Account: 5Ec4AhP7HwJNrY2CxEcFSy1BuqAY3qxvCQCfoois983TTxDA
+2020-07-20 12:33:21 Parachain genesis state: 0x000000000000000000000000000000000000000000000000000000000000000000a6239dc05a4013dddbb51d786fdf3153c3ca0f20295adf64e3ad48abb229cbe103170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c11131400
+```
+
+1. Go to https://polkadot.js.org/apps/#/explorer
+1. Swtich to local net port 9944 if not already on it
+1. Go to the Sudo tab, choose extrinsic method `registrar_registerPara`
+1. parachain id: the id displayed, i.e. 100
+1. scheduling - always
+1. code: click to upload `/ddex_net/ddex_cumulus/target/release/wbuild/generic_parachain_runtime/generic_parachain_runtime.compact.wasm
+1. inital head data: the genesis state found above
+1. sign with the wallet, if you do not already have alice, add a new account with her private key `0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a`
 
 
 ## Setup config details
@@ -69,12 +66,5 @@ fi
 ./target/release/polkadot build-spec --chain=westend_local.json --raw --disable-default-bootnode > ddex_raw.json
 ```
 
-#### Genesis state of parachains
-Currently, there is an issue with getting the genesis state in step 3 of the [instruction](https://github.com/paritytech/cumulus#running-a-collator), discussed in riot. Here are the genesis states used for registration. 
 
-TODO: update genesis states
-
-genesis state parachain
-0x000000000000000000000000000000000000000000000000000000000000000000b548c13343eca33ba013648dfb48121
-84264e0405e90ee8c80c659ddb60a294103170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c11131400
 
