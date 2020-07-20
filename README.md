@@ -19,13 +19,15 @@ Steps required are:-
 
 ### build parachains
 ```
-build_collators.sh
+./build_collators.sh
 ```
+Currently only one collator
 
 ### run the parachains
 ```
-start_collators.sh
+./start_collators.sh
 ```
+Currently only one collator
 
 ### register parachains
 
