@@ -45,9 +45,15 @@ bootnode () {
     echo "/ip4/127.0.0.1/tcp/$p2p/p2p/$id"
 }
 
-# bootnode "$alice_p2p" "$alice_rpc"
-
-args+=("--base-path=generic_parachain" "--" "--chain=ddex_raw.json" \
+args+=("--base-path=generic_parachain" \
+    "--ws-port=7744"
+    "--ws-external"
+    "--rpc-external"
+    "--rpc-cors=all"
+    "--rpc-port=7733"
+    "--port=40444"
+    "--dev"
+    "--" "--chain=ddex_raw.json" \
     "--bootnodes=$(bootnode "$alice_p2p" "$alice_rpc")" "--bootnodes=$(bootnode "$bob_p2p" "$bob_rpc")" )
 
 set -x

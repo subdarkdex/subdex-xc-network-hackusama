@@ -1,7 +1,9 @@
 # DDEX XC network
 
 ## Pre-requisits
-Docker version 19.03.8, build afacb8b
+- Docker version 19.03.8, build afacb8b
+- polkadot-api-js: `yarn global add @polkadot/api-cli@0.16.2`
+- execute access for the `.sh` files in this repo
 
 ## Setup for dev
 
@@ -31,10 +33,9 @@ Currently only one collator
 
 ### register parachains
 
-TODO: script
+To register a parachain we will need that parachain_id, the runtime wasm and genesis state. Currently, there is an issue with getting the genesis state in step 3 of the [instruction](https://github.com/paritytech/cumulus#running-a-collator), discussed in riot. So we will have to do it manually with So we will have to do it manually for now. 
 
-
-To register a parachain we will need that parachain_id and the genesis state. Currently, there is an issue with getting the genesis state in step 3 of the [instruction](https://github.com/paritytech/cumulus#running-a-collator), discussed in riot. So we will have to do it manually with UI for now. You can see both after you start the `start_collators.sh`, it will be something like this... 
+After you run `./start_collators.sh`, you can find the genesis state from the log. Copy the genesis state, it will look something like this
 
 ```
 2020-07-20 12:33:21 Parachain id: Id(100)
@@ -42,15 +43,7 @@ To register a parachain we will need that parachain_id and the genesis state. Cu
 2020-07-20 12:33:21 Parachain genesis state: 0x000000000000000000000000000000000000000000000000000000000000000000a6239dc05a4013dddbb51d786fdf3153c3ca0f20295adf64e3ad48abb229cbe103170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c11131400
 ```
 
-1. Go to https://polkadot.js.org/apps/#/explorer
-1. Swtich to local net port 9944 if not already on it
-1. Go to the Sudo tab, choose extrinsic method `registrar_registerPara`
-1. parachain id: the id displayed, i.e. 100
-1. scheduling - always
-1. code: click to upload `/ddex_net/ddex_cumulus/target/release/wbuild/generic_parachain_runtime/generic_parachain_runtime.compact.wasm
-1. inital head data: the genesis state found above
-1. sign with the wallet, if you do not already have alice, add a new account with her private key `0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a`
-
+copy the id and genesis state into `register_parachain.sh`, also be sure you are pointing to the correct wasm file for the parachain that you are registering for (currently generic_parachain)
 
 ## Setup config details
 #### Chain specs

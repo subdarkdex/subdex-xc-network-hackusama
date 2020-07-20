@@ -1,0 +1,10 @@
+{
+  "name": "ddex-xc-dev",
+  "version": "0.0.1",
+  "description": "simple polkadotjs app to communitcate with parachains",
+  "main": ";",
+  "license": "MIT",
+  "dependencies": {
+    "@polkadot/api": "^1.25.1"
+  }
+}
