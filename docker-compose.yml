@@ -20,6 +20,8 @@ services:
       - --unsafe-ws-external
       - --validator
       - --alice
+      - --no-prometheus
+      - --no-telemetry
 
   validator-bob:
     image: chevdor/polkadot:0.8.14
@@ -42,5 +44,7 @@ services:
       - --unsafe-ws-external
       - --validator
       - --bob
+      - --no-prometheus
+      - --no-telemetry
 
           

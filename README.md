@@ -32,18 +32,10 @@ Currently only one collator
 Currently only one collator
 
 ### register parachains
-
-To register a parachain we will need that parachain_id, the runtime wasm and genesis state. Currently, there is an issue with getting the genesis state in step 3 of the [instruction](https://github.com/paritytech/cumulus#running-a-collator), discussed in riot. So we will have to do it manually with So we will have to do it manually for now. 
-
-After you run `./start_collators.sh`, you can find the genesis state from the log. Copy the genesis state, it will look something like this
-
 ```
-2020-07-20 12:33:21 Parachain id: Id(100)
-2020-07-20 12:33:21 Parachain Account: 5Ec4AhP7HwJNrY2CxEcFSy1BuqAY3qxvCQCfoois983TTxDA
-2020-07-20 12:33:21 Parachain genesis state: 0x000000000000000000000000000000000000000000000000000000000000000000a6239dc05a4013dddbb51d786fdf3153c3ca0f20295adf64e3ad48abb229cbe103170a2e7597b7b7e3d84c05391d139a62b157e78786d8c082f29dcf4c11131400
+./register_parachain.sh
 ```
 
-copy the id and genesis state into `register_parachain.sh`, also be sure you are pointing to the correct wasm file for the parachain that you are registering for (currently generic_parachain)
 
 ## Setup config details
 #### Chain specs
