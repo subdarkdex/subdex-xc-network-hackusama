@@ -10,5 +10,5 @@ fi
 
 # build generic parachain
 cd ddex_cumulus
-git checkout generic-parachain
+git checkout generic
 cargo build --release -p generic-parachain-collator
