@@ -1,5 +1,4 @@
-validator*/
-ddex_cumulus
-generic_parachain
+*_data
+*-parachain
 **/node_modules
 gs

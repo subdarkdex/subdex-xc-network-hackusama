@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
 
-
+rm -rf *_data
 docker-compose down -v
-rm -rf validator_alice
-rm -rf validator_bob
-rm -rf generic_parachain
