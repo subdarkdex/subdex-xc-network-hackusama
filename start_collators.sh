@@ -6,7 +6,7 @@
 # this is _not_ a general-purpose script; it is closely tied to the
 # root docker-compose.yml
 
-set -ex
+set -e
 
 gc="generic-parachain/target/release/generic-parachain"
 dc="dex-parachain/target/release/dex-chain"
@@ -22,8 +22,12 @@ dc_args=( "$@" )
 
 alice_p2p="30333"
 bob_p2p="30335"
+charlie_p2p="30336"
+dave_p2p="30337"
 alice_rpc="9933"
 bob_rpc="9911"
+charlie_rpc="8811"
+dave_rpc="8833"
 
 
 get_id () {
@@ -47,34 +51,43 @@ bootnode () {
     echo "/ip4/127.0.0.1/tcp/$p2p/p2p/$id"
 }
 
-gc_args+=("--base-path=generic_parachain_data" \
-    "--parachain-id=100"
-    "--ws-port=7744"
-    "--ws-external"
-    "--rpc-external"
-    "--rpc-cors=all"
-    "--rpc-port=7733"
-    "--port=40444"
-    "--out-peers=0"
-    "--in-peers=0"
-    "--log=debug"
-    "--" "--chain=ddex_raw.json" \
-    "--bootnodes=$(bootnode "$alice_p2p" "$alice_rpc")" "--bootnodes=$(bootnode "$bob_p2p" "$bob_rpc")" )
+gc_args+=("--base-path=generic_parachain_data" 
+    "--parachain-id=100" 
+    "--ws-port=7744" 
+    "--ws-external" 
+    "--rpc-external" 
+    "--rpc-cors=all" 
+    "--rpc-port=7733" 
+    "--port=40444" 
+    "--out-peers=0" 
+    "--in-peers=0" 
+    "--" 
+    "--chain=ddex_raw.json" 
+    "--bootnodes=$(bootnode "$alice_p2p" "$alice_rpc")" 
+    "--bootnodes=$(bootnode "$bob_p2p" "$bob_rpc")" 
+    "--ws-port=7722"
+    "--rpc-port=7711"
+    "--port=40334"
+    )
 
 
-dc_args+=("--base-path=dex_parachain_data" \
-    "--parachain-id=200"
-    "--ws-port=6644"
-    "--ws-external"
-    "--rpc-external"
-    "--rpc-cors=all"
-    "--rpc-port=6633"
-    "--port=40440"
-    "--out-peers=0"
-    "--in-peers=0"
-    "--log=debug"
-    "--" "--chain=ddex_raw.json" \
-    "--bootnodes=$(bootnode "$alice_p2p" "$alice_rpc")" "--bootnodes=$(bootnode "$bob_p2p" "$bob_rpc")" )
+dc_args+=("--base-path=dex_parachain_data" 
+    "--parachain-id=200" 
+    "--ws-port=6644" 
+    "--ws-external" 
+    "--rpc-external" 
+    "--rpc-cors=all" 
+    "--rpc-port=6633" 
+    "--port=40440" 
+    "--out-peers=0" 
+    "--in-peers=0" 
+    "--" "--chain=ddex_raw.json" 
+    "--bootnodes=$(bootnode "$charlie_p2p" "$charlie_rpc")" 
+    "--bootnodes=$(bootnode "$dave_p2p" "$dave_rpc")" 
+    "--ws-port=6622" 
+    "--rpc-port=6611" 
+    "--port=40330"
+    )
 
 set -x
 "$gc" "${gc_args[@]}" & "$dc" "${dc_args[@]}"

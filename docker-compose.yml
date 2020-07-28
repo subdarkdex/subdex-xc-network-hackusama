@@ -47,4 +47,50 @@ services:
       - --no-prometheus
       - --no-telemetry
 
-          
+  validator-charlie:
+    image: chevdor/polkadot:0.8.14
+    ports:
+      - '30336:30336'
+      - '8822:8822'
+      - '8811:8811'
+    volumes:
+        - ./:/data
+
+    entrypoint:
+      - polkadot
+      - --chain=/data/ddex_raw.json
+      - --base-path=/data/validator_charlie_data
+      - --port=30336
+      - --ws-port=8822
+      - --rpc-port=8811
+      - --rpc-cors=all
+      - --unsafe-rpc-external
+      - --unsafe-ws-external
+      - --validator
+      - --charlie
+      - --no-prometheus
+      - --no-telemetry
+
+  validator-dave:
+    image: chevdor/polkadot:0.8.14
+    ports:
+      - '30337:30337'
+      - '8844:8844'
+      - '8833:8833'
+    volumes:
+        - ./:/data
+
+    entrypoint:
+      - polkadot
+      - --chain=/data/ddex_raw.json
+      - --base-path=/data/validator_dave_data
+      - --port=30337
+      - --ws-port=8844
+      - --rpc-port=8833
+      - --rpc-cors=all
+      - --unsafe-rpc-external
+      - --unsafe-ws-external
+      - --validator
+      - --dave
+      - --no-prometheus
+      - --no-telemetry

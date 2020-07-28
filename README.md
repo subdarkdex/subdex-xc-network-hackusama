@@ -41,7 +41,7 @@ Currently only one collator
 #### Chain specs
 The DarkDex chain spec is a duplication of the westend-local chain, you can generate it with the following script. 
 
-```
+```sh
 ./target/release/polkadot build-spec --disable-default-bootnode --chain westend-local > westend_local.json
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -50,6 +50,7 @@ elif [[ "$OSTYPE" == "linux-gnu" ]]; then
 	sed -i 's/Westend Local Testnet/DarkDex Local Testnet/' westend_local.json
 fi
 
+# Added new validators, dave and chalie
 ./target/release/polkadot build-spec --chain=westend_local.json --raw --disable-default-bootnode > ddex_raw.json
 ```
 
