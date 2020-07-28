@@ -16,22 +16,21 @@ Steps required are:-
 1. register parachains
 
 
-### validators
-`docker-compose up` will set up alice and bob
+### 1. Set up validators
+`docker-compose up` will set up alice, bob, charlie and dave
 
-### build parachains
+### 2. build parachains
+_This will take a WHILEEEEEEE_
 ```
 ./build_collators.sh
 ```
-Currently only one collator
 
-### run the parachains
+### 3. run the parachains
 ```
 ./start_collators.sh
 ```
-Currently only one collator
 
-### register parachains
+### 4. register parachains
 ```
 ./register_parachain.sh
 ```
@@ -39,19 +38,11 @@ Currently only one collator
 
 ## Setup config details
 #### Chain specs
-The DarkDex chain spec is a duplication of the westend-local chain, you can generate it with the following script. 
+The DarkDex chain spec is a duplication of the westend-local chain, but with 4 validators and validator count as 4. Changes were made to v0.8.14 - chain_spec.rs
 
 ```sh
-./target/release/polkadot build-spec --disable-default-bootnode --chain westend-local > westend_local.json
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-	sed -i '' 's/Westend Local Testnet/DarkDex Local Testnet/' westend_local.json
-elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-	sed -i 's/Westend Local Testnet/DarkDex Local Testnet/' westend_local.json
-fi
-
-# Added new validators, dave and chalie
-./target/release/polkadot build-spec --chain=westend_local.json --raw --disable-default-bootnode > ddex_raw.json
+# westend-local was updated with 4 validators, Alice, Bob, Charlie and Dave
+./target/release/polkadot build-spec --chain=westend-local --raw --disable-default-bootnode > ddex_raw.json
 ```
 
 ___
