@@ -35,6 +35,11 @@ _This will take a WHILEEEEEEE_
 ./register_parachain.sh
 ```
 
+### 5. (purge-chains, all chains)
+```
+./clear_al.sh
+```
+
 
 ## Setup config details
 #### Chain specs
