@@ -1,4 +1,5 @@
 *_data
 *-parachain
 **/node_modules
-gs
+*_gs
+.DS_Store

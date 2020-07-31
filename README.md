@@ -2,7 +2,7 @@
 
 ## Pre-requisits
 - Docker version 19.03.8, build afacb8b
-- polkadot-api-js: `yarn global add @polkadot/api-cli@0.16.2`
+- polkadot-api-js: `yarn global add @polkadot/api-cli@0.18.1`
 - execute access for the `.sh` files in this repo
 
 ## Setup for dev
@@ -42,6 +42,19 @@ _This will take a WHILEEEEEEE_
 
 
 ## Setup config details
+#### Parachain account
+
+The parachain account is tied to the `parachain_id` [encoded](https://github.com/paritytech/polkadot/blob/master/parachain/src/primitives.rs#L164)
+
+```
+ Parachain id: Id(100)
+ Parachain Account: 5Ec4AhP7HwJNrY2CxEcFSy1BuqAY3qxvCQCfoois983TTxDA
+... 
+ Parachain id: Id(200)
+ Parachain Account: 5Ec4AhPTL6nWnUnw58QzjJvFd3QATwHA3UJnvSD4GVSQ7Gop
+```
+
+
 #### Chain specs
 The DarkDex chain spec is a duplication of the westend-local chain, but with 4 validators and validator count as 4. Changes were made to v0.8.14 - chain_spec.rs
 

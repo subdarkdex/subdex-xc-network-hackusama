@@ -11,6 +11,7 @@ fi
 # build generic parachain
 cd generic-parachain
 git checkout generic-parachain
+git pull origin generic-parachain
 cargo build --release -p generic-parachain-collator
 cd ..
 
@@ -21,5 +22,7 @@ fi
 cd dex-parachain
 rm -rf target/release/wbuild*
 rm -rf target/release/generic-parachain*
+git reset HEAD
 git checkout dex_chain
+git pull origin dex_chain
 cargo build --release -p dex-chain-collator
