@@ -1,7 +1,7 @@
 version: '3'
 services:
   validator-alice:
-    image: parity/polkadot:v0.8.19
+    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
     ports:
       - '30333:30333'
       - '9944:9944'
@@ -24,7 +24,7 @@ services:
       - --no-telemetry
 
   validator-bob:
-    image: parity/polkadot:v0.8.19
+    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
     ports:
       - '30335:30335'
       - '9922:9922'
@@ -48,7 +48,7 @@ services:
       - --no-telemetry
 
   validator-charlie:
-    image: parity/polkadot:v0.8.19
+    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
     ports:
       - '30336:30336'
       - '8822:8822'
@@ -72,7 +72,7 @@ services:
       - --no-telemetry
 
   validator-dave:
-    image: parity/polkadot:v0.8.19
+    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
     ports:
       - '30337:30337'
       - '8844:8844'
