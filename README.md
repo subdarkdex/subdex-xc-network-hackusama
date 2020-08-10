@@ -1,11 +1,42 @@
 # DDEX XC network
 
-## Pre-requisits
+
+
+
+
+___
+## Development
+
+### building all docker images for dockerhub
+
+1. **Base images** - this is to compile the binary / wasm file from branches of subdarkdex_cumulus
+
+```sh
+cd dex-parachain # or generic-parachain
+docker build --tag belsyuen/dex-chain:<version>
+```
+
+2. **Collator** - this will be used for the genesis state
+
+```sh
+docker build --file ./docker/dex-chain-collator.dockerfile --target collator --tag belsyuen/dex-collator:<version> ./docker
+# will use use it like docker run collator /usr/bin/dex-chain export-genesis-state /data/genesis-state
+```
+
+3. **WASM Runtime** - this is a WASM runtime volume to register the parachain
+
+```sh
+docker build --file ./docker/dex-chain-collator.dockerfile --target runtime --tag belsyuen/dex-runtime:<version> ./docker
+```
+
+
+## Run local parachain binarys
+### Pre-requisits
 - Docker version 19.03.8, build afacb8b
 - polkadot-api-js: `yarn global add @polkadot/api-cli@0.18.1`
 - execute access for the `.sh` files in this repo
 
-## Setup for dev
+### Setup for native parachain binaries
 
 *NOTE:* - we are not using the script provided in cumulus because we want 2 parachains, also, need to be able to build and rebuild the parachain binaries as we experiment. But when we get more familiar / more stable versions of the parachains, we can build a similar script to do all steps. 
 
@@ -17,7 +48,7 @@ Steps required are:-
 
 
 ### 1. Set up validators
-`docker-compose up` will set up alice, bob, charlie and dave
+`docker-compose -f docker-compose-validatorsOnly.yml up` will set up alice, bob, charlie and dave
 
 ### 2. build parachains
 _This will take a WHILEEEEEEE_

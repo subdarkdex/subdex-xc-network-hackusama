@@ -1,0 +1,168 @@
+version: '3'
+services:
+  validator-alice:
+    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    ports:
+      - '30333:30333'
+      - '9944:9944'
+      - '9933:9933'
+    volumes:
+      - ./:/data
+    entrypoint:
+      - polkadot
+      - --chain=/data/ddex_raw.json
+      - --base-path=/data/validator_alice_data
+      - --port=30333
+      - --ws-port=9944
+      - --rpc-port=9933
+      - --rpc-cors=all
+      - --unsafe-rpc-external
+      - --unsafe-ws-external
+      - --validator
+      - --alice
+      - --no-prometheus
+      - --no-telemetry
+    networks:
+      dex_net:
+        ipv4_address: 172.28.1.1
+        aliases:
+          - alice
+
+  validator-bob:
+    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    ports:
+      - '30335:30335'
+      - '9922:9922'
+      - '9911:9911'
+    volumes:
+       - ./:/data
+    entrypoint:
+      - polkadot
+      - --chain=/data/ddex_raw.json
+      - --base-path=/data/validator_bob_data
+      - --port=30335
+      - --ws-port=9922
+      - --rpc-port=9911
+      - --rpc-cors=all
+      - --unsafe-rpc-external
+      - --unsafe-ws-external
+      - --validator
+      - --bob
+      - --no-prometheus
+      - --no-telemetry
+    networks:
+      dex_net:
+        ipv4_address: 172.28.1.2
+        aliases:
+          - bob
+  
+  validator-charlie:
+    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    ports:
+      - '30336:30336'
+      - '8822:8822'
+      - '8811:8811'
+    volumes:
+        - ./:/data
+    entrypoint:
+      - polkadot
+      - --chain=/data/ddex_raw.json
+      - --base-path=/data/validator_charlie_data
+      - --port=30336
+      - --ws-port=8822
+      - --rpc-port=8811
+      - --rpc-cors=all
+      - --unsafe-rpc-external
+      - --unsafe-ws-external
+      - --validator
+      - --charlie
+      - --no-prometheus
+      - --no-telemetry
+    networks:
+      dex_net:
+        ipv4_address: 172.28.1.4
+        aliases:
+          - charlie
+
+  validator-dave:
+    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    ports:
+      - '30337:30337'
+      - '8844:8844'
+      - '8833:8833'
+    volumes:
+        - ./:/data
+    entrypoint:
+      - polkadot
+      - --chain=/data/ddex_raw.json
+      - --base-path=/data/validator_dave_data
+      - --port=30337
+      - --ws-port=8844
+      - --rpc-port=8833
+      - --rpc-cors=all
+      - --unsafe-rpc-external
+      - --unsafe-ws-external
+      - --validator
+      - --dave
+      - --no-prometheus
+      - --no-telemetry
+    networks:
+      dex_net:
+        ipv4_address: 172.28.1.6
+        aliases:
+          - dave
+
+  dex_genesis_state:
+    image: belsyuen/dex-collator:v0.1.0
+    volumes:
+      - "dex-genesis-state:/data"
+    command: >
+      /usr/bin/dex-chain
+      export-genesis-state
+      /data/dex-genesis-state
+
+  dex_collator:
+    image: belsyuen/dex-collator:v0.1.0
+    volumes:
+      - "dex-collator-data:/data"
+    depends_on:
+      - validator_alice
+      - validator_bob
+      - validator_charlie
+      - validator_dave
+    command: >
+      /usr/bin/start_dex_collator.sh
+    networks:
+      dex_net:
+        ipv4_address: 172.28.1.8
+        aliases:
+          - collator
+
+  dex-runtime:
+    image: belsyuen/dex-runtime:v0.1.0
+    volumes:
+      - "dex-chain-wasm-runtime:/runtime"
+
+
+  registrar:
+    build:
+      context: .
+      dockerfile: ./docker/parachain-registrar.dockerfile
+    image: para-reg:latest
+    volumes:
+      - "dex-genesis-state:/dex-genesis-state"
+      - "dex-chain-wasm-runtime:/runtime"
+    depends_on:
+      - node_alice
+      - runtime
+      - genesis_state
+    networks:
+      dex_net:
+
+networks:
+  testing_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+  
