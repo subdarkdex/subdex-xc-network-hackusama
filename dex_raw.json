@@ -1,5 +1,5 @@
 {
-  "name": "Ddex Local Testnet",
+  "name": "Dex Relay Chain Testnet",
   "id": "westend_local_testnet",
   "chainType": "Local",
   "bootNodes": [],

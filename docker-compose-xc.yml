@@ -10,8 +10,8 @@ services:
       - ./:/data
     entrypoint:
       - polkadot
-      - --chain=/data/ddex_raw.json
-      - --base-path=/data/validator_alice_data
+      - --chain=/data/docker/dex_raw.json
+      - --base-path=/data/alice_data
       - --port=30333
       - --ws-port=9944
       - --rpc-port=9933
@@ -31,18 +31,18 @@ services:
   validator-bob:
     image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
     ports:
-      - '30335:30335'
-      - '9922:9922'
-      - '9911:9911'
+      - '30335:30333'
+      - '9966:9944'
+      - '9955:9933'
     volumes:
-       - ./:/data
+      - ./:/data
     entrypoint:
       - polkadot
-      - --chain=/data/ddex_raw.json
-      - --base-path=/data/validator_bob_data
-      - --port=30335
-      - --ws-port=9922
-      - --rpc-port=9911
+      - --chain=/data/docker/dex_raw.json
+      - --base-path=/data/bob_data
+      - --port=30333
+      - --ws-port=9944
+      - --rpc-port=9933
       - --rpc-cors=all
       - --unsafe-rpc-external
       - --unsafe-ws-external
@@ -59,18 +59,18 @@ services:
   validator-charlie:
     image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
     ports:
-      - '30336:30336'
-      - '8822:8822'
-      - '8811:8811'
+      - '30337:30333'
+      - '9988:9944'
+      - '9977:9933'
     volumes:
-        - ./:/data
+      - ./:/data
     entrypoint:
       - polkadot
-      - --chain=/data/ddex_raw.json
-      - --base-path=/data/validator_charlie_data
-      - --port=30336
-      - --ws-port=8822
-      - --rpc-port=8811
+      - --chain=/data/docker/dex_raw.json
+      - --base-path=/data/charlie_data
+      - --port=30333
+      - --ws-port=9944
+      - --rpc-port=9933
       - --rpc-cors=all
       - --unsafe-rpc-external
       - --unsafe-ws-external
@@ -87,18 +87,18 @@ services:
   validator-dave:
     image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
     ports:
-      - '30337:30337'
-      - '8844:8844'
-      - '8833:8833'
+      - '30339:30333'
+      - '9922:9944'
+      - '9911:9933'
     volumes:
-        - ./:/data
+      - ./:/data
     entrypoint:
       - polkadot
-      - --chain=/data/ddex_raw.json
-      - --base-path=/data/validator_dave_data
-      - --port=30337
-      - --ws-port=8844
-      - --rpc-port=8833
+      - --chain=/data/docker/dex_raw.json
+      - --base-path=/data/dave_data
+      - --port=30333
+      - --ws-port=9944
+      - --rpc-port=9933
       - --rpc-cors=all
       - --unsafe-rpc-external
       - --unsafe-ws-external
@@ -112,24 +112,24 @@ services:
         aliases:
           - dave
 
-  dex_genesis_state:
+  dex-genesis-state:
     image: belsyuen/dex-collator:v0.1.0
     volumes:
-      - "dex-genesis-state:/data"
+      - dex-genesis-state:/data
     command: >
       /usr/bin/dex-chain
       export-genesis-state
       /data/dex-genesis-state
 
-  dex_collator:
+  dex-collator:
     image: belsyuen/dex-collator:v0.1.0
     volumes:
-      - "dex-collator-data:/data"
+      - ./:/data
     depends_on:
-      - validator_alice
-      - validator_bob
-      - validator_charlie
-      - validator_dave
+      - validator-alice
+      - validator-bob
+      - validator-charlie
+      - validator-dave
     command: >
       /usr/bin/start_dex_collator.sh
     networks:
@@ -141,26 +141,27 @@ services:
   dex-runtime:
     image: belsyuen/dex-runtime:v0.1.0
     volumes:
-      - "dex-chain-wasm-runtime:/runtime"
+      - dex-chain-wasm-runtime:/runtime
 
 
   registrar:
-    build:
-      context: .
-      dockerfile: ./docker/parachain-registrar.dockerfile
-    image: para-reg:latest
+    image: belsyuen/dex-registrar:v0.1.0
     volumes:
-      - "dex-genesis-state:/dex-genesis-state"
-      - "dex-chain-wasm-runtime:/runtime"
+      - dex-genesis-state:/dex-genesis-state
+      - dex-chain-wasm-runtime:/dex-chain-wasm-runtime
     depends_on:
-      - node_alice
-      - runtime
-      - genesis_state
+      - validator-alice
+      - dex-runtime
+      - dex-genesis-state
     networks:
       dex_net:
 
+volumes:
+  dex-genesis-state:
+  dex-chain-wasm-runtime:
+
 networks:
-  testing_net:
+  dex_net:
     ipam:
       driver: default
       config:

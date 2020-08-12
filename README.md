@@ -16,17 +16,23 @@ cd dex-parachain # or generic-parachain
 docker build --tag belsyuen/dex-chain:<version>
 ```
 
-2. **Collator** - this will be used for the genesis state
+2. **Collator** - this will be the collator and also used to generate genesis state
 
 ```sh
-docker build --file ./docker/dex-chain-collator.dockerfile --target collator --tag belsyuen/dex-collator:<version> ./docker
+docker build --file ./docker/dex-chain-collator.dockerfile --target collator --tag belsyuen/dex-collator:v0.1.0 ./docker
 # will use use it like docker run collator /usr/bin/dex-chain export-genesis-state /data/genesis-state
 ```
 
 3. **WASM Runtime** - this is a WASM runtime volume to register the parachain
 
 ```sh
-docker build --file ./docker/dex-chain-collator.dockerfile --target runtime --tag belsyuen/dex-runtime:<version> ./docker
+docker build --file ./docker/dex-chain-collator.dockerfile --target runtime --tag belsyuen/dex-runtime:v0.1.0 ./docker
+```
+
+4. **Registrar** - this is the registrar 
+
+```sh
+docker build --file ./docker/parachain-registrar.dockerfile --tag belsyuen/dex-registrar:v0.1.0 ./docker
 ```
 
 
@@ -91,7 +97,7 @@ The DarkDex chain spec is a duplication of the westend-local chain, but with 4 v
 
 ```sh
 # westend-local was updated with 4 validators, Alice, Bob, Charlie and Dave
-./target/release/polkadot build-spec --chain=westend-local --raw --disable-default-bootnode > ddex_raw.json
+./target/release/polkadot build-spec --chain=westend-local --raw --disable-default-bootnode > dex_raw.json
 ```
 
 ___

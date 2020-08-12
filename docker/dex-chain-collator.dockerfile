@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install jq curl bash -y && \
     apt-get install -y nodejs && \
     npm install --global yarn && \
     yarn global add @polkadot/api-cli@0.18.1
+RUN mkdir /data
+COPY ./dex_raw.json /data
 COPY --from=dex \
     /dex_chain/target/release/dex-chain /usr/bin
 COPY ./start_dex_collator.sh /usr/bin
@@ -28,7 +30,9 @@ FROM debian:buster-slim as runtime
 COPY --from=dex \
     /dex_chain/target/release/wbuild/dex-chain-runtime/dex_chain_runtime.compact.wasm \
     /var/opt/
-CMD ["cp", "-v", "/var/opt/dex_chain_runtime.compact.wasm", "/runtime/"]
+RUN mkdir /runtime
+RUN cp -v /var/opt/dex_chain_runtime.compact.wasm /runtime
+
 
 # default
 FROM debian:buster-slim
