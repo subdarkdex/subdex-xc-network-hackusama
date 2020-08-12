@@ -72,7 +72,10 @@ _This will take a WHILEEEEEEE_
 ./register_parachain.sh
 ```
 
-### 5. (purge-chains, all chains)
+### 5. stop validators
+`docker-compose -f docker-compose-validatorsOnly.yml down`
+
+### 6. (purge-chains, all chains)
 ```
 ./clear_al.sh
 ```
