@@ -12,7 +12,7 @@ This is a part of the submission for Hackusama 2020.
 1. subdex-chain (Standalone dex-pallet in a substrate node)
 2. subdex-ui (React frontend providing friendly UI)
 3. **subdex-xc-network** (current repo)
-4. subdex-cumulus (Parachains using the Cumulus framework, generic-parachain and dex_chain branches)
+4. subdex-parachains (Parachains using the Cumulus framework with the substrate-parachain-template, generic-parachain and dex_chain branches)
 
 #### To run with docker
 ```sh
@@ -128,14 +128,14 @@ This is currently a playground.
 ```
 {
   "AssetId": "u64",
+  "Address": "AccountId",
+  "LookupSource": "AccountId"
   "AccountId":"AccountId",
   "BlockNumber": "u32",
   "Signature": "MultiSignature",
   "Balance": "u128",
   "AccountIndex": "u32",
   "Index": "u32",
-  "Address": "AccountId",
-  "LookupSource": "AccountId"
 }
 ```
 

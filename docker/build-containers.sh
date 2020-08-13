@@ -8,7 +8,7 @@ VERSION=$1
 docker build \
     --file ./dex-chain-collator.dockerfile \
     --target collator \
-    --tag subdarkdex/dex-collator:"$VERSION" \
+    --tag subdarkdex/subdex-collator:"$VERSION" \
     .
 
 #Generic-collator
@@ -22,7 +22,7 @@ docker build \
 docker build \
     --file ./dex-chain-collator.dockerfile \
     --target runtime \
-    --tag subdarkdex/dex-runtime:"$VERSION" \
+    --tag subdarkdex/subdex-runtime:"$VERSION" \
     .
 
 # Generic-runtime
@@ -35,7 +35,7 @@ docker build \
 # Registrar
 docker build \
     --file ./parachain-registrar.dockerfile \
-    --tag subdarkdex/dex-registrar:"$VERSION" \
+    --tag subdarkdex/subdex-registrar:"$VERSION" \
     .
 
 docker rmi $(docker images | grep "<none>" | awk "{print $3}")

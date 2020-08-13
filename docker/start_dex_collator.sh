@@ -8,7 +8,7 @@
 
 set -e
 
-dc="/usr/bin/dex-chain"
+dc="/usr/bin/subdex-parachain-collator"
 
 if [ ! -x "$dc" ]; then
     echo "FATAL: no correct executables"

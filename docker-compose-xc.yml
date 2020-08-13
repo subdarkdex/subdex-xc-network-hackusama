@@ -4,7 +4,7 @@ services:
     image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30333:30333'
-      - '9944:9944'
+      - '6644:9944'
       - '9933:9933'
     volumes:
       - ./:/data
@@ -109,13 +109,13 @@ services:
           - dave
 
   dex-genesis-state:
-    image: subdarkdex/dex-collator:v0.1.0
+    image: subdarkdex/subdex-collator:v0.1.0
     volumes:
-      - dex-genesis-state:/data
+      - subdex-genesis-state:/data
     command: >
       /usr/bin/dex-chain
       export-genesis-state
-      /data/dex-genesis-state
+      /data/subdex-genesis-state
 
   generic-genesis-state:
     image: subdarkdex/generic-collator:v0.1.0
@@ -127,10 +127,10 @@ services:
       /data/generic-genesis-state
     
   dex-collator:
-    image: subdarkdex/dex-collator:v0.1.0
+    image: subdarkdex/subdex-collator:v0.1.0
     ports:
       - '40440:30333'
-      - '6644:9944'
+      - '9944:9944'
       - '6633:9933'
     volumes:
       - ./:/data
@@ -169,9 +169,9 @@ services:
           - generic-collator
 
   dex-runtime:
-    image: subdarkdex/dex-runtime:v0.1.0
+    image: subdarkdex/subdex-runtime:v0.1.0
     volumes:
-      - dex-chain-wasm-runtime:/runtime
+      - subdex-chain-wasm-runtime:/runtime
 
   generic-runtime:
     image: subdarkdex/generic-runtime:v0.1.0
@@ -179,7 +179,7 @@ services:
       - generic-chain-wasm-runtime:/runtime
     
   registrar:
-    image: subdarkdex/dex-registrar:v0.1.0
+    image: subdarkdex/subdex-registrar:v0.1.0
     volumes:
       - dex-genesis-state:/dex-genesis-state
       - generic-genesis-state:/generic-genesis-state
@@ -195,8 +195,8 @@ services:
       dex_net:
 
 volumes:
-  dex-genesis-state:
-  dex-chain-wasm-runtime:
+  subdex-genesis-state:
+  subdex-chain-wasm-runtime:
   generic-genesis-state:
   generic-chain-wasm-runtime:
 

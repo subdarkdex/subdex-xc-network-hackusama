@@ -17,12 +17,12 @@ cd ..
 
 DIRECTORY='dex-parachain'
 if [ ! -d "$DIRECTORY" ]; then
-    cp -r generic-parachain dex-parachain
+    cp -r generic-parachain subdex-parachain
 fi
 cd dex-parachain
 rm -rf target/release/wbuild*
 rm -rf target/release/generic-parachain*
 git reset HEAD
-git checkout dex_chain
-git pull origin dex_chain
+git checkout subdex
+git pull origin subdex
 cargo build --release

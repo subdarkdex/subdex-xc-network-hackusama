@@ -4,7 +4,7 @@ services:
     image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30333:30333'
-      - '9944:9944'
+      - '6644:6644'
       - '9933:9933'
     volumes:
       - ./:/data
@@ -12,7 +12,7 @@ services:
       - --chain=/data/dex_raw.json
       - --base-path=/data/validator_alice_data
       - --port=30333
-      - --ws-port=9944
+      - --ws-port=6644
       - --rpc-port=9933
       - --rpc-cors=all
       - --unsafe-rpc-external

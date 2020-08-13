@@ -1,4 +1,4 @@
-FROM subdarkdex/dex-chain:v0.1.0 as dex
+FROM subdarkdex/subdex-chain:v0.1.0 as dex
 
 # the collator stage is normally built once, cached, and then ignored, but can
 # be specified with the --target build flag. This adds some extra tooling to the
@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install jq curl bash -y && \
     npm install --global yarn && \
     yarn global add @polkadot/api-cli@0.18.1
 COPY --from=dex \
-    /dex_chain/target/release/dex-chain /usr/bin
+    /subdex_chain/target/release/subdex-parachain-collator /usr/bin
 COPY ./start_dex_collator.sh /usr/bin
 # This queries bootnodes and run collator, a binary copied
 
@@ -26,14 +26,8 @@ COPY ./start_dex_collator.sh /usr/bin
 # outputs, which can then be moved into a volume at runtime
 FROM debian:buster-slim as runtime
 COPY --from=dex \
-    /dex_chain/target/release/wbuild/dex-chain-runtime/dex_chain_runtime.compact.wasm \
+    /subdex_chain/target/release/wbuild/parachain-runtime/parachain_runtime.compact.wasm \
     /var/opt/
 RUN mkdir /runtime
-RUN cp -v /var/opt/dex_chain_runtime.compact.wasm /runtime
+RUN cp -v /var/opt/parachain_runtime.compact.wasm /runtime
 
-
-# default
-FROM debian:buster-slim
-COPY --from=dex \
-    /dex_chain/target/release/dex-chain /usr/bin
-CMD ["/usr/bin/dex-chain"]
