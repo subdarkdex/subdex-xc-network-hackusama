@@ -1,15 +1,14 @@
 version: '3'
 services:
   validator-alice:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30333:30333'
       - '9944:9944'
       - '9933:9933'
     volumes:
       - ./:/data
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/validator_alice_data
       - --port=30333
@@ -24,7 +23,7 @@ services:
       - --no-telemetry
 
   validator-bob:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30335:30335'
       - '9922:9922'
@@ -32,8 +31,7 @@ services:
     volumes:
        - ./:/data
 
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/validator_bob_data
       - --port=30335
@@ -48,7 +46,7 @@ services:
       - --no-telemetry
 
   validator-charlie:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30336:30336'
       - '8822:8822'
@@ -56,8 +54,7 @@ services:
     volumes:
         - ./:/data
 
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/validator_charlie_data
       - --port=30336
@@ -72,7 +69,7 @@ services:
       - --no-telemetry
 
   validator-dave:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30337:30337'
       - '8844:8844'
@@ -80,8 +77,7 @@ services:
     volumes:
         - ./:/data
 
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/validator_dave_data
       - --port=30337

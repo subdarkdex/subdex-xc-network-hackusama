@@ -1,15 +1,14 @@
 version: '3'
 services:
   validator-alice:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30333:30333'
       - '9944:9944'
       - '9933:9933'
     volumes:
       - ./:/data
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/alice_data
       - --port=30333
@@ -29,15 +28,14 @@ services:
           - alice
 
   validator-bob:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30335:30333'
       - '9966:9944'
       - '9955:9933'
     volumes:
       - ./:/data
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/bob_data
       - --port=30333
@@ -57,15 +55,14 @@ services:
           - bob
   
   validator-charlie:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30337:30333'
       - '9988:9944'
       - '9977:9933'
     volumes:
       - ./:/data
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/charlie_data
       - --port=30333
@@ -85,15 +82,14 @@ services:
           - charlie
 
   validator-dave:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30339:30333'
       - '9922:9944'
       - '9911:9933'
     volumes:
       - ./:/data
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/dave_data
       - --port=30333

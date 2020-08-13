@@ -126,8 +126,17 @@ ___
 This is currently a playground. 
 
 ```
-cd app
-yarn
+{
+  "AssetId": "u64",
+  "AccountId":"AccountId",
+  "BlockNumber": "u32",
+  "Signature": "MultiSignature",
+  "Balance": "u128",
+  "AccountIndex": "u32",
+  "Index": "u32",
+  "Address": "AccountId",
+  "LookupSource": "AccountId"
+}
 ```
 
 
