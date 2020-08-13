@@ -8,17 +8,17 @@
 
 set -e
 
-gc="generic-parachain/target/release/generic-parachain"
-dc="dex-parachain/target/release/dex-chain"
+gc="generic-parachain/target/release/generic-parachain-collator"
+# dc="dex-parachain/target/release/dex-chain"
 
-if [ ! -x "$gc" -o  ! -x "$dc" ]; then
-    echo "FATAL: no correct executables"
-    exit 1
-fi
+# if [ ! -x "$gc" -o  ! -x "$dc" ]; then
+#     echo "FATAL: no correct executables"
+#     exit 1
+# fi
 
 # name the variable with the incoming args so it isn't overwritten later by function calls
 gc_args=( "$@" )
-dc_args=( "$@" )
+# dc_args=( "$@" )
 
 alice_p2p="30333"
 bob_p2p="30335"
@@ -93,4 +93,5 @@ dc_args+=("--base-path=dex_parachain_data"
     )
 
 set -x
-"$gc" "${gc_args[@]}" & "$dc" "${dc_args[@]}"
+"$gc" "${gc_args[@]}"
+#  & "$dc" "${dc_args[@]}"
