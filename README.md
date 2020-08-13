@@ -1,8 +1,31 @@
-# DDEX XC network
+# SubDex Cross-Chains Network
+
+This repo provides simple scripts, inspired by polkadot/cumulus, to set up a network with:-
+1. Relay Chain with 4 validators (Alice, Bob, Charlie and Dave)
+2. Generic parachain (test parachain in cumulus)
+3. SubDex parachain (parachain with generic-asset and dex pallets)
+
+The relay chain chain-specs is a modified version of westend_local, with `validator_count = 4` to support 2 parachains.
 
 
+This is a part of the submission for Hackusama 2020. 
+1. Subdex-chain (Standalone dex-pallet in a substrate node)
+2. Subdex-UI (React frontend providing friendly UI)
+3. **Subdex-XC-Network** (current repo)
+4. Subdex-cumulus (Parachains using the Cumulus framework, generic-parachain and dex_chain branches)
 
+#### To run with docker
+```sh
+# in the root of this directory
+docker-compose --file docker-compose-xc.yml up
+```
 
+#### To stop
+```sh
+# in the root of this directory
+docker-compose --file docker-compose-xc.yml down -v
+./clear_all.sh 
+```
 
 ___
 ## Development
@@ -12,29 +35,24 @@ ___
 1. **Base images** - this is to compile the binary / wasm file from branches of subdarkdex_cumulus
 
 ```sh
-cd dex-parachain # or generic-parachain
+ # or generic-parachain
+git clone https://github.com/subdarkdex/subdarkdex_cumulus.git dex-parachain
+git checkout dex_chain
+cd dex-parachain
 docker build --tag belsyuen/dex-chain:<version>
 ```
 
-2. **Collator** - this will be the collator and also used to generate genesis state
+2. **Collators, WASM Runtime Volume, Registrar**
+- collators - both dex and generic parachains
+- wasm runtime volume - this is a copy of the wasm runtime for the collators, used to register parachain, we also have the genesis state volume built during docker-compose up for this purpose
+- registrar - simple polkadotjs cli container to register the parachains using sudo
+
 
 ```sh
-docker build --file ./docker/dex-chain-collator.dockerfile --target collator --tag belsyuen/dex-collator:v0.1.0 ./docker
-# will use use it like docker run collator /usr/bin/dex-chain export-genesis-state /data/genesis-state
+cd docker
+./build-containers.sh v0.1.0 
+# or other versions
 ```
-
-3. **WASM Runtime** - this is a WASM runtime volume to register the parachain
-
-```sh
-docker build --file ./docker/dex-chain-collator.dockerfile --target runtime --tag belsyuen/dex-runtime:v0.1.0 ./docker
-```
-
-4. **Registrar** - this is the registrar 
-
-```sh
-docker build --file ./docker/parachain-registrar.dockerfile --tag belsyuen/dex-registrar:v0.1.0 ./docker
-```
-
 
 ## Run local parachain binarys
 ### Pre-requisits
@@ -57,7 +75,6 @@ Steps required are:-
 `docker-compose -f docker-compose-validatorsOnly.yml up` will set up alice, bob, charlie and dave
 
 ### 2. build parachains
-_This will take a WHILEEEEEEE_
 ```
 ./build_collators.sh
 ```

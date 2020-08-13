@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# this script runs the generic-parachain-collator after fetching
+# this script runs the dex-parachain-collator after fetching
 # appropriate bootnode IDs
 #
 # this is _not_ a general-purpose script; it is closely tied to the
-# root docker-compose.yml
+# root docker-compose-xc.yml
 
 set -e
 
@@ -19,8 +19,6 @@ dc_args=( "$@" )
 
 alice_ip="172.28.1.1"
 bob_ip="172.28.1.2"
-charlie_ip="172.28.1.4"
-dave_ip="172.28.1.6"
 
 get_id () {
     ip="$1"

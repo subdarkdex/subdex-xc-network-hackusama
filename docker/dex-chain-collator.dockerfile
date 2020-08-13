@@ -16,8 +16,6 @@ RUN apt-get update && apt-get install jq curl bash -y && \
     apt-get install -y nodejs && \
     npm install --global yarn && \
     yarn global add @polkadot/api-cli@0.18.1
-RUN mkdir /data
-COPY ./dex_raw.json /data
 COPY --from=dex \
     /dex_chain/target/release/dex-chain /usr/bin
 COPY ./start_dex_collator.sh /usr/bin

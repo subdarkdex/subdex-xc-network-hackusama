@@ -10,7 +10,7 @@ services:
       - ./:/data
     entrypoint:
       - polkadot
-      - --chain=/data/docker/dex_raw.json
+      - --chain=/data/dex_raw.json
       - --base-path=/data/alice_data
       - --port=30333
       - --ws-port=9944
@@ -38,7 +38,7 @@ services:
       - ./:/data
     entrypoint:
       - polkadot
-      - --chain=/data/docker/dex_raw.json
+      - --chain=/data/dex_raw.json
       - --base-path=/data/bob_data
       - --port=30333
       - --ws-port=9944
@@ -66,7 +66,7 @@ services:
       - ./:/data
     entrypoint:
       - polkadot
-      - --chain=/data/docker/dex_raw.json
+      - --chain=/data/dex_raw.json
       - --base-path=/data/charlie_data
       - --port=30333
       - --ws-port=9944
@@ -94,7 +94,7 @@ services:
       - ./:/data
     entrypoint:
       - polkadot
-      - --chain=/data/docker/dex_raw.json
+      - --chain=/data/dex_raw.json
       - --base-path=/data/dave_data
       - --port=30333
       - --ws-port=9944
@@ -121,8 +121,21 @@ services:
       export-genesis-state
       /data/dex-genesis-state
 
+  generic-genesis-state:
+    image: belsyuen/generic-collator:v0.1.0
+    volumes:
+      - generic-genesis-state:/data
+    command: >
+      /usr/bin/generic-parachain
+      export-genesis-state
+      /data/generic-genesis-state
+    
   dex-collator:
     image: belsyuen/dex-collator:v0.1.0
+    ports:
+      - '40440:30333'
+      - '6644:9944'
+      - '6633:9933'
     volumes:
       - ./:/data
     depends_on:
@@ -136,29 +149,60 @@ services:
       dex_net:
         ipv4_address: 172.28.1.8
         aliases:
-          - collator
+          - dex-collator
+
+  generic-collator:
+    image: belsyuen/generic-collator:v0.1.0
+    ports:
+      - '40444:30333'
+      - '7744:9944'
+      - '7733:9933'
+    volumes:
+      - ./:/data
+    depends_on:
+      - validator-alice
+      - validator-bob
+      - validator-charlie
+      - validator-dave
+    command: >
+      /usr/bin/start_generic_collator.sh
+    networks:
+      dex_net:
+        ipv4_address: 172.28.1.10
+        aliases:
+          - generic-collator
 
   dex-runtime:
     image: belsyuen/dex-runtime:v0.1.0
     volumes:
       - dex-chain-wasm-runtime:/runtime
 
-
+  generic-runtime:
+    image: belsyuen/generic-runtime:v0.1.0
+    volumes:
+      - generic-chain-wasm-runtime:/runtime
+    
   registrar:
     image: belsyuen/dex-registrar:v0.1.0
     volumes:
       - dex-genesis-state:/dex-genesis-state
+      - generic-genesis-state:/generic-genesis-state
       - dex-chain-wasm-runtime:/dex-chain-wasm-runtime
+      - generic-chain-wasm-runtime:/generic-chain-wasm-runtime
     depends_on:
       - validator-alice
       - dex-runtime
+      - generic-runtime
       - dex-genesis-state
+      - generic-genesis-state
     networks:
       dex_net:
 
 volumes:
   dex-genesis-state:
   dex-chain-wasm-runtime:
+  generic-genesis-state:
+  generic-chain-wasm-runtime:
 
 networks:
   dex_net:

@@ -4,92 +4,62 @@
 # appropriate bootnode IDs
 #
 # this is _not_ a general-purpose script; it is closely tied to the
-# root docker-compose.yml
+# root docker-compose-xc.yml
 
 set -e
 
-gc="generic-parachain/target/release/generic-parachain"
-dc="dex-parachain/target/release/dex-chain"
+dc="/usr/bin/generic-parachain"
 
-if [ ! -x "$gc" -o  ! -x "$dc" ]; then
+if [ ! -x "$dc" ]; then
     echo "FATAL: no correct executables"
     exit 1
 fi
 
-# name the variable with the incoming args so it isn't overwritten later by function calls
-gc_args=( "$@" )
 dc_args=( "$@" )
 
-alice_p2p="30333"
-bob_p2p="30335"
-charlie_p2p="30336"
-dave_p2p="30337"
-alice_rpc="9933"
-bob_rpc="9911"
-charlie_rpc="8811"
-dave_rpc="8833"
-
+charlie_ip="172.28.1.4"
+dave_ip="172.28.1.6"
 
 get_id () {
-    rpc="$1"
-    ./wait-for-it.sh "127.0.0.1:$rpc" -t 10 -- \
-        curl \
+    ip="$1"
+    ./wait-for-it.sh "$ip:9933" -t 10 -- \
+        curl -sS \
             -H 'Content-Type: application/json' \
             --data '{"id":1,"jsonrpc":"2.0","method":"system_localPeerId"}' \
-            "127.0.0.1:$rpc" |\
+            "$ip:9933" |\
     jq -r '.result'
 }
 
 bootnode () {
-    p2p="$1"
-    rpc="$2"
-    id=$(get_id "$rpc")
+    ip="$1"
+    id=$(get_id "$ip")
     if [ -z "$id" ]; then
-        echo >&2 "failed to get id for $node"
+        echo >&2 "failed to get id for $ip"
         exit 1
     fi
-    echo "/ip4/127.0.0.1/tcp/$p2p/p2p/$id"
+    echo "/ip4/$ip/tcp/30333/p2p/$id"
 }
 
-gc_args+=("--base-path=generic_parachain_data" 
+
+
+dc_args+=("--base-path=/data/generic_data" 
     "--parachain-id=100" 
     "--validator"
-    "--ws-port=7744" 
+    "--port=30333"
+    "--ws-port=9944"
+    "--rpc-port=9933"
     "--unsafe-ws-external" 
     "--unsafe-rpc-external" 
     "--rpc-cors=all" 
-    "--rpc-port=7733" 
-    "--port=40444" 
     "--out-peers=0" 
     "--in-peers=0" 
-    "--" 
-    "--chain=dex_raw.json" 
-    "--bootnodes=$(bootnode "$alice_p2p" "$alice_rpc")" 
-    "--bootnodes=$(bootnode "$bob_p2p" "$bob_rpc")" 
-    "--ws-port=7722"
-    "--rpc-port=7711"
-    "--port=40334"
-    )
-
-
-dc_args+=("--base-path=dex_parachain_data" 
-    "--parachain-id=200" 
-    "--validator"
-    "--ws-port=6644" 
-    "--unsafe-ws-external" 
-    "--unsafe-rpc-external" 
-    "--rpc-cors=all" 
-    "--rpc-port=6633" 
-    "--port=40440" 
-    "--out-peers=0" 
-    "--in-peers=0" 
-    "--" "--chain=dex_raw.json" 
-    "--bootnodes=$(bootnode "$charlie_p2p" "$charlie_rpc")" 
-    "--bootnodes=$(bootnode "$dave_p2p" "$dave_rpc")" 
+    "--" "--chain=/data/dex_raw.json" 
+    "--bootnodes=$(bootnode "$charlie_ip")" 
+    "--bootnodes=$(bootnode "$dave_ip")" 
     "--ws-port=6622" 
     "--rpc-port=6611" 
     "--port=40330"
     )
 
 set -x
-"$gc" "${gc_args[@]}" & "$dc" "${dc_args[@]}"
+"$dc" "${dc_args[@]}"

@@ -5,7 +5,8 @@ const Charlie = "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y"
 async function main () {
     const api = await ApiPromise.create({ 
         provider: wsProvider,
-        types: { 
+        types: {
+            "AssetId": "u64",
             "Address": "AccountId", 
             "LookupSource": "AccountId", 
             "RelayChainBlockNumber": "BlockNumber",
@@ -25,9 +26,6 @@ async function main () {
     const unsub = await api.tx.balances.transfer(Charlie, 100)
     .signAndSend(alice, (result) => {
         console.log(`Current result is ${JSON.stringify(result)}`);
-
-        // Current result is {"events":[],"status":{"Ready":null}}
-        // Current result is {"events":[],"status":{"Invalid":null}}
     })
 };
   
