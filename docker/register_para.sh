@@ -38,9 +38,9 @@ wait_for_file () {
     exit 1
 }
 
-wait_for_file /dex-chain-wasm-runtime/dex_chain_runtime.compact.wasm
+wait_for_file /dex-chain-wasm-runtime/chain_runtime.compact.wasm
 wait_for_file /dex-genesis-state/dex-genesis-state
-wait_for_file /generic-chain-wasm-runtime/generic_parachain_runtime.compact.wasm
+wait_for_file /generic-chain-wasm-runtime/arachain_runtime.compact.wasm
 wait_for_file /generic-genesis-state/generic-genesis-state
 
 # this is now straightforward: just send the sudo'd tx to the alice node,

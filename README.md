@@ -39,7 +39,7 @@ ___
 git clone https://github.com/subdarkdex/subdex_cumulus.git dex-parachain
 git checkout dex_chain
 cd dex-parachain
-docker build --tag belsyuen/dex-chain:<version>
+docker build --tag subdarkdex/dex-chain:<version>
 ```
 
 2. **Collators, WASM Runtime Volume, Registrar**

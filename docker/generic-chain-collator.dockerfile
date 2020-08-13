@@ -9,13 +9,13 @@ RUN apt-get update && apt-get install jq curl bash -y && \
     npm install --global yarn && \
     yarn global add @polkadot/api-cli@0.18.1
 COPY --from=generic \
-    /generic_chain/target/release/generic-parachain /usr/bin
+    /generic_chain/target/release/generic-parachain-collator /usr/bin
 COPY ./start_generic_collator.sh /usr/bin
 
 
 FROM debian:buster-slim as runtime
 COPY --from=generic \
-    /generic_chain/target/release/wbuild/generic-parachain-runtime/generic_parachain_runtime.compact.wasm \
+    /generic_chain/target/release/wbuild/parachain-runtime/parachain_runtime.compact.wasm \
     /var/opt/
 RUN mkdir /runtime
-RUN cp -v /var/opt/generic_parachain_runtime.compact.wasm /runtime
+RUN cp -v /var/opt/parachain_runtime.compact.wasm /runtime
