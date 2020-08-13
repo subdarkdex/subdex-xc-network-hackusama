@@ -32,11 +32,11 @@ ___
 
 ### building all docker images for dockerhub
 
-1. **Base images** - this is to compile the binary / wasm file from branches of subdarkdex_cumulus
+1. **Base images** - this is to compile the binary / wasm file from branches of subdex_cumulus
 
 ```sh
  # or generic-parachain
-git clone https://github.com/subdarkdex/subdarkdex_cumulus.git dex-parachain
+git clone https://github.com/subdarkdex/subdex_cumulus.git dex-parachain
 git checkout dex_chain
 cd dex-parachain
 docker build --tag belsyuen/dex-chain:<version>
