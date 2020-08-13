@@ -22,7 +22,7 @@ bob_ip="172.28.1.2"
 
 get_id () {
     ip="$1"
-    ./wait-for-it.sh "$ip:9933" -t 10 -- \
+    ./wait-for-it.sh "$ip:9933" -t 100 -- \
         curl -sS \
             -H 'Content-Type: application/json' \
             --data '{"id":1,"jsonrpc":"2.0","method":"system_localPeerId"}' \

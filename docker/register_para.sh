@@ -46,8 +46,8 @@ wait_for_file /generic-genesis-state/generic-genesis-state
 # this is now straightforward: just send the sudo'd tx to the alice node,
 # as soon as the node is ready to receive connections
 /wait-for-it.sh 172.28.1.1:9944 \
-    --strict \
-    --timeout=10 \
+     \
+    --timeout=100 \
     -- \
     polkadot-js-api \
         --ws ws://172.28.1.1:9944 \
@@ -60,8 +60,8 @@ wait_for_file /generic-genesis-state/generic-genesis-state
             "$(cat /dex-genesis-state/dex-genesis-state)"
 
 /wait-for-it.sh 172.28.1.1:9944 \
-    --strict \
-    --timeout=10 \
+     \
+    --timeout=100 \
     -- \
     polkadot-js-api \
         --ws ws://172.28.1.1:9944 \
