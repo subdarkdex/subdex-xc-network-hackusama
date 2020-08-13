@@ -104,10 +104,10 @@ Steps required are:-
 The parachain account is tied to the `parachain_id` [encoded](https://github.com/paritytech/polkadot/blob/master/parachain/src/primitives.rs#L164)
 
 ```
- Parachain id: Id(100)
+ Parachain id: Id(100) Generic Parachain
  Parachain Account: 5Ec4AhP7HwJNrY2CxEcFSy1BuqAY3qxvCQCfoois983TTxDA
 ... 
- Parachain id: Id(200)
+ Parachain id: Id(200) Dex Parachain
  Parachain Account: 5Ec4AhPTL6nWnUnw58QzjJvFd3QATwHA3UJnvSD4GVSQ7Gop
 ```
 
