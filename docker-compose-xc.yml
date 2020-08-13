@@ -109,7 +109,7 @@ services:
           - dave
 
   dex-genesis-state:
-    image: belsyuen/dex-collator:v0.1.0
+    image: subdarkdex/dex-collator:v0.1.0
     volumes:
       - dex-genesis-state:/data
     command: >
@@ -118,7 +118,7 @@ services:
       /data/dex-genesis-state
 
   generic-genesis-state:
-    image: belsyuen/generic-collator:v0.1.0
+    image: subdarkdex/generic-collator:v0.1.0
     volumes:
       - generic-genesis-state:/data
     command: >
@@ -127,7 +127,7 @@ services:
       /data/generic-genesis-state
     
   dex-collator:
-    image: belsyuen/dex-collator:v0.1.0
+    image: subdarkdex/dex-collator:v0.1.0
     ports:
       - '40440:30333'
       - '6644:9944'
@@ -148,7 +148,7 @@ services:
           - dex-collator
 
   generic-collator:
-    image: belsyuen/generic-collator:v0.1.0
+    image: subdarkdex/generic-collator:v0.1.0
     ports:
       - '40444:30333'
       - '7744:9944'
@@ -169,17 +169,17 @@ services:
           - generic-collator
 
   dex-runtime:
-    image: belsyuen/dex-runtime:v0.1.0
+    image: subdarkdex/dex-runtime:v0.1.0
     volumes:
       - dex-chain-wasm-runtime:/runtime
 
   generic-runtime:
-    image: belsyuen/generic-runtime:v0.1.0
+    image: subdarkdex/generic-runtime:v0.1.0
     volumes:
       - generic-chain-wasm-runtime:/runtime
     
   registrar:
-    image: belsyuen/dex-registrar:v0.1.0
+    image: subdarkdex/dex-registrar:v0.1.0
     volumes:
       - dex-genesis-state:/dex-genesis-state
       - generic-genesis-state:/generic-genesis-state

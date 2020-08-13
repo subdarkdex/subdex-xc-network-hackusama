@@ -1,4 +1,4 @@
-FROM belsyuen/generic-chain:v0.1.0 as generic
+FROM subdarkdex/generic-chain:v0.1.0 as generic
 
 FROM debian:buster-slim as collator
 RUN apt-get update && apt-get install jq curl bash -y && \
