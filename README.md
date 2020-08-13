@@ -1,18 +1,18 @@
-# SubDex Cross-Chains Network
+# Subdex cross chain network
 
 This repo provides simple scripts, inspired by polkadot/cumulus, to set up a network with:-
 1. Relay Chain with 4 validators (Alice, Bob, Charlie and Dave)
 2. Generic parachain (test parachain in cumulus)
-3. SubDex parachain (parachain with generic-asset and dex pallets)
+3. Subdex parachain (parachain with generic-asset and dex pallets)
 
 The relay chain chain-specs is a modified version of westend_local, with `validator_count = 4` to support 2 parachains.
 
 
 This is a part of the submission for Hackusama 2020. 
-1. Subdex-chain (Standalone dex-pallet in a substrate node)
-2. Subdex-UI (React frontend providing friendly UI)
-3. **Subdex-XC-Network** (current repo)
-4. Subdex-cumulus (Parachains using the Cumulus framework, generic-parachain and dex_chain branches)
+1. subdex-chain (Standalone dex-pallet in a substrate node)
+2. subdex-ui (React frontend providing friendly UI)
+3. **subdex-xc-network** (current repo)
+4. subdex-cumulus (Parachains using the Cumulus framework, generic-parachain and dex_chain branches)
 
 #### To run with docker
 ```sh
