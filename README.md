@@ -3,7 +3,7 @@
 This repo provides simple scripts, inspired by polkadot/cumulus, to set up a network with:-
 1. Relay Chain with 4 validators (Alice, Bob, Charlie and Dave)
 2. Generic parachain (test parachain in cumulus)
-3. Subdex parachain (parachain with generic-asset and dex pallets)
+3. Subdex parachain (parachain with generic-asset and dex pallet)
 
 The relay chain chain-specs is a modified version of westend_local, with `validator_count = 4` to support 2 parachains.
 
@@ -37,14 +37,11 @@ ___
 ```sh
 # To build
 
-# or generic-parachain
-git clone https://github.com/subdarkdex/subdex_cumulus.git dex-parachain
-git checkout dex_chain
+# for generic-parachain
+git clone https://github.com/subdarkdex/subdex_parachains.git dex-parachain
 cd dex-parachain
-docker build --tag subdarkdex/dex-chain:<version>
+docker build --tag subdarkdex/generic-chain:<version>
 
-# To pull
-docker docker push subdarkdex/subdex-chain
 ```
 
 2. **Collators, WASM Runtime Volume, Registrar**
@@ -98,7 +95,7 @@ Steps required are:-
 
 ### 6. (purge-chains, all chains)
 ```
-./clear_al.sh
+./clear_all.sh
 ```
 
 
