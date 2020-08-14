@@ -1,0 +1,12 @@
+{
+  "name": "parachain-register",
+  "version": "1.0.0",
+  "description": "Register parachains",
+  "main": "index.js",
+  "author": "Belsy Yuen",
+  "license": "Unlicensed",
+  "private": true,
+  "dependencies": {
+    "@polkadot/api": "^1.28.1"
+  }
+}

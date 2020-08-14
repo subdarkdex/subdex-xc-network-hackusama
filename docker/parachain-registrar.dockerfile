@@ -1,11 +1,5 @@
 FROM node:latest AS pjs
 
-# It would be great to depend on a more stable tag, but we need some
-# as-yet-unreleased features.
-RUN yarn global add @polkadot/api-cli@0.18.1
-
-ENTRYPOINT [ "polkadot-js-api" ]
-CMD [ "--version" ]
 
 # To use the pjs build stage to access the blockchain from the host machine:
 #
@@ -20,6 +14,8 @@ FROM pjs
 RUN apt-get update && apt-get install curl netcat -y && \
     curl -sSo /wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
     chmod +x /wait-for-it.sh
+COPY ./register/ /var/tmp/register
+RUN cd /var/tmp/register && yarn && chmod +x index.js
 # the only thing left to do is to actually run the transaction.
 COPY ./register_para.sh /usr/bin
 # unset the previous stage's entrypoint

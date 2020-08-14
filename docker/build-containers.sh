@@ -8,34 +8,34 @@ VERSION=$1
 docker build \
     --file ./dex-chain-collator.dockerfile \
     --target collator \
-    --tag belsyuen/dex-collator:"$VERSION" \
+    --tag subdarkdex/subdex-collator:"$VERSION" \
     .
 
 #Generic-collator
 docker build \
     --file ./generic-chain-collator.dockerfile \
     --target collator \
-    --tag belsyuen/generic-collator:"$VERSION" \
+    --tag subdarkdex/generic-collator:"$VERSION" \
     .
 
 # Dex-runtime
 docker build \
     --file ./dex-chain-collator.dockerfile \
     --target runtime \
-    --tag belsyuen/dex-runtime:"$VERSION" \
+    --tag subdarkdex/subdex-runtime:"$VERSION" \
     .
 
 # Generic-runtime
 docker build \
     --file ./generic-chain-collator.dockerfile \
     --target runtime \
-    --tag belsyuen/geneic-runtime:"$VERSION" \
+    --tag subdarkdex/generic-runtime:"$VERSION" \
     .
 
 # Registrar
 docker build \
     --file ./parachain-registrar.dockerfile \
-    --tag belsyuen/dex-registrar:"$VERSION" \
+    --tag subdarkdex/subdex-registrar:"$VERSION" \
     .
 
 docker rmi $(docker images | grep "<none>" | awk "{print $3}")

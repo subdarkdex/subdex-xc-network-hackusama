@@ -38,37 +38,30 @@ wait_for_file () {
     exit 1
 }
 
-wait_for_file /dex-chain-wasm-runtime/dex_chain_runtime.compact.wasm
-wait_for_file /dex-genesis-state/dex-genesis-state
-wait_for_file /generic-chain-wasm-runtime/generic_parachain_runtime.compact.wasm
+wait_for_file /subdex-chain-wasm-runtime/parachain_runtime.compact.wasm
+wait_for_file /subdex-genesis-state/subdex-genesis-state
+wait_for_file /generic-chain-wasm-runtime/parachain_runtime.compact.wasm
 wait_for_file /generic-genesis-state/generic-genesis-state
 
 # this is now straightforward: just send the sudo'd tx to the alice node,
 # as soon as the node is ready to receive connections
-/wait-for-it.sh 172.28.1.1:9944 \
-     \
-    --timeout=100 \
-    -- \
-    polkadot-js-api \
-        --ws ws://172.28.1.1:9944 \
-        --sudo \
-        --seed "//Alice" \
-        tx.registrar.registerPara \
-            200 \
-            '{"scheduling":"Always"}' \
-            @/dex-chain-wasm-runtime/dex_chain_runtime.compact.wasm \
-            "$(cat /dex-genesis-state/dex-genesis-state)"
 
 /wait-for-it.sh 172.28.1.1:9944 \
      \
     --timeout=100 \
     -- \
-    polkadot-js-api \
-        --ws ws://172.28.1.1:9944 \
-        --sudo \
-        --seed "//Alice" \
-        tx.registrar.registerPara \
-            100 \
-            '{"scheduling":"Always"}' \
-            @/generic-chain-wasm-runtime/generic_parachain_runtime.compact.wasm \
-            "$(cat /generic-genesis-state/generic-genesis-state)"
+    node /var/tmp/register \
+        172.28.1.1 9944 \
+        /subdex-chain-wasm-runtime/parachain_runtime.compact.wasm \
+        /subdex-genesis-state/subdex-genesis-state \
+        200
+
+/wait-for-it.sh 172.28.1.1:9944 \
+     \
+    --timeout=100 \
+    -- \
+    node /var/tmp/register \
+    172.28.1.1 9944 \
+    /generic-chain-wasm-runtime/parachain_runtime.compact.wasm \
+    /generic-genesis-state/generic-genesis-state \
+    100

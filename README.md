@@ -12,7 +12,7 @@ This is a part of the submission for Hackusama 2020.
 1. subdex-chain (Standalone dex-pallet in a substrate node)
 2. subdex-ui (React frontend providing friendly UI)
 3. **subdex-xc-network** (current repo)
-4. subdex-cumulus (Parachains using the Cumulus framework, generic-parachain and dex_chain branches)
+4. subdex-parachains (Parachains using the Cumulus framework with the substrate-parachain-template, generic-parachain and dex_chain branches)
 
 #### To run with docker
 ```sh
@@ -35,11 +35,16 @@ ___
 1. **Base images** - this is to compile the binary / wasm file from branches of subdex_cumulus
 
 ```sh
- # or generic-parachain
+# To build
+
+# or generic-parachain
 git clone https://github.com/subdarkdex/subdex_cumulus.git dex-parachain
 git checkout dex_chain
 cd dex-parachain
-docker build --tag belsyuen/dex-chain:<version>
+docker build --tag subdarkdex/dex-chain:<version>
+
+# To pull
+docker docker push subdarkdex/subdex-chain
 ```
 
 2. **Collators, WASM Runtime Volume, Registrar**
@@ -57,7 +62,6 @@ cd docker
 ## Run local parachain binarys
 ### Pre-requisits
 - Docker version 19.03.8, build afacb8b
-- polkadot-api-js: `yarn global add @polkadot/api-cli@0.18.1`
 - execute access for the `.sh` files in this repo
 
 ### Setup for native parachain binaries
@@ -104,10 +108,10 @@ Steps required are:-
 The parachain account is tied to the `parachain_id` [encoded](https://github.com/paritytech/polkadot/blob/master/parachain/src/primitives.rs#L164)
 
 ```
- Parachain id: Id(100)
+ Parachain id: Id(100) Generic Parachain
  Parachain Account: 5Ec4AhP7HwJNrY2CxEcFSy1BuqAY3qxvCQCfoois983TTxDA
 ... 
- Parachain id: Id(200)
+ Parachain id: Id(200) Dex Parachain
  Parachain Account: 5Ec4AhPTL6nWnUnw58QzjJvFd3QATwHA3UJnvSD4GVSQ7Gop
 ```
 
@@ -121,13 +125,18 @@ The DarkDex chain spec is a duplication of the westend-local chain, but with 4 v
 ```
 
 ___
-## App
+## Interaction
 
-This is currently a playground. 
+This version works with 1.29 polkadot js on https://polkadot.js.org/apps/
 
+#### Types:
 ```
-cd app
-yarn
+{
+  "AssetId": "u64",
+  "Address": "AccountId",
+  "LookupSource": "AccountId"
+ 
+}
 ```
 
 

@@ -8,8 +8,8 @@
 
 set -e
 
-gc="generic-parachain/target/release/generic-parachain"
-dc="dex-parachain/target/release/dex-chain"
+gc="generic-parachain/target/release/generic-parachain-collator"
+dc="subdex-parachain/target/release/subdex-parachain-collator"
 
 if [ ! -x "$gc" -o  ! -x "$dc" ]; then
     echo "FATAL: no correct executables"
@@ -72,10 +72,10 @@ gc_args+=("--base-path=generic_parachain_data"
     )
 
 
-dc_args+=("--base-path=dex_parachain_data" 
+dc_args+=("--base-path=subdex_parachain_data" 
     "--parachain-id=200" 
     "--validator"
-    "--ws-port=6644" 
+    "--ws-port=9944" 
     "--unsafe-ws-external" 
     "--unsafe-rpc-external" 
     "--rpc-cors=all" 

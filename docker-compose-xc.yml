@@ -1,15 +1,14 @@
 version: '3'
 services:
   validator-alice:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30333:30333'
-      - '9944:9944'
+      - '6644:9944'
       - '9933:9933'
     volumes:
       - ./:/data
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/alice_data
       - --port=30333
@@ -29,15 +28,14 @@ services:
           - alice
 
   validator-bob:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30335:30333'
       - '9966:9944'
       - '9955:9933'
     volumes:
       - ./:/data
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/bob_data
       - --port=30333
@@ -57,15 +55,14 @@ services:
           - bob
   
   validator-charlie:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30337:30333'
       - '9988:9944'
       - '9977:9933'
     volumes:
       - ./:/data
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/charlie_data
       - --port=30333
@@ -85,15 +82,14 @@ services:
           - charlie
 
   validator-dave:
-    image: parity/polkadot:master-0.8.22-cdb5c40-a1443153
+    image: joshyorndorff/cumulus-workshop-polkadot:sha-e5855c5
     ports:
       - '30339:30333'
       - '9922:9944'
       - '9911:9933'
     volumes:
       - ./:/data
-    entrypoint:
-      - polkadot
+    command:
       - --chain=/data/dex_raw.json
       - --base-path=/data/dave_data
       - --port=30333
@@ -113,28 +109,28 @@ services:
           - dave
 
   dex-genesis-state:
-    image: belsyuen/dex-collator:v0.1.0
+    image: subdarkdex/subdex-collator:v0.1.0
     volumes:
-      - dex-genesis-state:/data
+      - subdex-genesis-state:/data
     command: >
-      /usr/bin/dex-chain
+      /usr/bin/subdex-parachain-collator
       export-genesis-state
-      /data/dex-genesis-state
+      /data/subdex-genesis-state
 
   generic-genesis-state:
-    image: belsyuen/generic-collator:v0.1.0
+    image: subdarkdex/generic-collator:v0.1.0
     volumes:
       - generic-genesis-state:/data
     command: >
-      /usr/bin/generic-parachain
+      /usr/bin/generic-parachain-collator
       export-genesis-state
       /data/generic-genesis-state
     
   dex-collator:
-    image: belsyuen/dex-collator:v0.1.0
+    image: subdarkdex/subdex-collator:v0.1.0
     ports:
       - '40440:30333'
-      - '6644:9944'
+      - '9944:9944'
       - '6633:9933'
     volumes:
       - ./:/data
@@ -152,7 +148,7 @@ services:
           - dex-collator
 
   generic-collator:
-    image: belsyuen/generic-collator:v0.1.0
+    image: subdarkdex/generic-collator:v0.1.0
     ports:
       - '40444:30333'
       - '7744:9944'
@@ -173,24 +169,25 @@ services:
           - generic-collator
 
   dex-runtime:
-    image: belsyuen/dex-runtime:v0.1.0
+    image: subdarkdex/subdex-runtime:v0.1.0
     volumes:
-      - dex-chain-wasm-runtime:/runtime
+      - subdex-chain-wasm-runtime:/runtime
 
   generic-runtime:
-    image: belsyuen/generic-runtime:v0.1.0
+    image: subdarkdex/generic-runtime:v0.1.0
     volumes:
       - generic-chain-wasm-runtime:/runtime
     
   registrar:
-    image: belsyuen/dex-registrar:v0.1.0
+    image: subdarkdex/subdex-registrar:v0.1.0
     volumes:
-      - dex-genesis-state:/dex-genesis-state
+      - subdex-genesis-state:/subdex-genesis-state
       - generic-genesis-state:/generic-genesis-state
-      - dex-chain-wasm-runtime:/dex-chain-wasm-runtime
+      - subdex-chain-wasm-runtime:/subdex-chain-wasm-runtime
       - generic-chain-wasm-runtime:/generic-chain-wasm-runtime
     depends_on:
       - validator-alice
+      - validator-bob
       - dex-runtime
       - generic-runtime
       - dex-genesis-state
@@ -199,8 +196,8 @@ services:
       dex_net:
 
 volumes:
-  dex-genesis-state:
-  dex-chain-wasm-runtime:
+  subdex-genesis-state:
+  subdex-chain-wasm-runtime:
   generic-genesis-state:
   generic-chain-wasm-runtime:
 
