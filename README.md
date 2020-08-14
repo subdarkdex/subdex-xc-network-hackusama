@@ -35,11 +35,16 @@ ___
 1. **Base images** - this is to compile the binary / wasm file from branches of subdex_cumulus
 
 ```sh
- # or generic-parachain
+# To build
+
+# or generic-parachain
 git clone https://github.com/subdarkdex/subdex_cumulus.git dex-parachain
 git checkout dex_chain
 cd dex-parachain
 docker build --tag subdarkdex/dex-chain:<version>
+
+# To pull
+docker docker push subdarkdex/subdex-chain
 ```
 
 2. **Collators, WASM Runtime Volume, Registrar**
