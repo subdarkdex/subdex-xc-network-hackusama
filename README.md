@@ -9,10 +9,10 @@ The relay chain chain-specs is a modified version of westend_local, with `valida
 
 
 This is a part of the submission for Hackusama 2020. 
-1. subdex-chain (Standalone dex-pallet in a substrate node)
-2. subdex-ui (React frontend providing friendly UI)
+1. [subdex-chain](https://github.com/subdarkdex/subdex-chain) (Standalone dex-pallet in a substrate node)
+2. [subdex-ui](https://github.com/subdarkdex/subdex-ui) (React frontend providing friendly UI)
 3. **subdex-xc-network** (current repo)
-4. subdex-parachains (Parachains using the Cumulus framework with the substrate-parachain-template, generic-parachain and dex_chain branches)
+4. [subdex-parachains](https://github.com/subdarkdex/subdex-parachains) (Parachains using the Cumulus framework with the substrate-parachain-template, generic-parachain and dex_chain branches)
 
 #### To run with docker
 ```sh
