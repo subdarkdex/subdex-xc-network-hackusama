@@ -57,7 +57,6 @@ cd docker
 ## Run local parachain binarys
 ### Pre-requisits
 - Docker version 19.03.8, build afacb8b
-- polkadot-api-js: `yarn global add @polkadot/api-cli@0.18.1`
 - execute access for the `.sh` files in this repo
 
 ### Setup for native parachain binaries
@@ -121,21 +120,17 @@ The DarkDex chain spec is a duplication of the westend-local chain, but with 4 v
 ```
 
 ___
-## App
+## Interaction
 
-This is currently a playground. 
+This version works with 1.29 polkadot js on https://polkadot.js.org/apps/
 
+#### Types:
 ```
 {
   "AssetId": "u64",
   "Address": "AccountId",
   "LookupSource": "AccountId"
-  "AccountId":"AccountId",
-  "BlockNumber": "u32",
-  "Signature": "MultiSignature",
-  "Balance": "u128",
-  "AccountIndex": "u32",
-  "Index": "u32",
+ 
 }
 ```
 

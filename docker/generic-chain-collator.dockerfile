@@ -4,10 +4,7 @@ FROM debian:buster-slim as collator
 RUN apt-get update && apt-get install jq curl bash -y && \
     curl -sSo /wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
     chmod +x /wait-for-it.sh && \
-    curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install --global yarn && \
-    yarn global add @polkadot/api-cli@0.18.1
+    curl -sL https://deb.nodesource.com/setup_12.x | bash - 
 COPY --from=generic \
     /generic_chain/target/release/generic-parachain-collator /usr/bin
 COPY ./start_generic_collator.sh /usr/bin

@@ -29,7 +29,7 @@ docker build \
 docker build \
     --file ./generic-chain-collator.dockerfile \
     --target runtime \
-    --tag subdarkdex/geneic-runtime:"$VERSION" \
+    --tag subdarkdex/generic-runtime:"$VERSION" \
     .
 
 # Registrar

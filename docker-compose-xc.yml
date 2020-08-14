@@ -113,7 +113,7 @@ services:
     volumes:
       - subdex-genesis-state:/data
     command: >
-      /usr/bin/dex-chain
+      /usr/bin/subdex-parachain-collator
       export-genesis-state
       /data/subdex-genesis-state
 
@@ -122,7 +122,7 @@ services:
     volumes:
       - generic-genesis-state:/data
     command: >
-      /usr/bin/generic-parachain
+      /usr/bin/generic-parachain-collator
       export-genesis-state
       /data/generic-genesis-state
     
@@ -181,12 +181,13 @@ services:
   registrar:
     image: subdarkdex/subdex-registrar:v0.1.0
     volumes:
-      - dex-genesis-state:/dex-genesis-state
+      - subdex-genesis-state:/subdex-genesis-state
       - generic-genesis-state:/generic-genesis-state
-      - dex-chain-wasm-runtime:/dex-chain-wasm-runtime
+      - subdex-chain-wasm-runtime:/subdex-chain-wasm-runtime
       - generic-chain-wasm-runtime:/generic-chain-wasm-runtime
     depends_on:
       - validator-alice
+      - validator-bob
       - dex-runtime
       - generic-runtime
       - dex-genesis-state
