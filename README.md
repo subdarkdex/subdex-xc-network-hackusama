@@ -1,4 +1,4 @@
-# Subdex cross chain network
+# Subdex cross chain network Deprecated - only docker supported
 
 This repo provides simple scripts, inspired by polkadot/cumulus, to set up a network with:-
 1. Relay Chain with 4 validators (Alice, Bob, Charlie and Dave)
